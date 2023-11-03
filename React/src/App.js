@@ -1,34 +1,22 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Item from "./Item";
+import Button from "./Button";
 
 function App(props) {
 
-    const [data, setData] = useState([{
-        id: 1,
-        text: 'item1'
-    },
-    {
-        id: 2,
-        text: 'item2'
-    },
-    {
-        id: 3,
-        text: 'item3'
-    },
-    {
-        id: 4,
-        text: 'item4'
-    }
-    ]);
+    const [message, setMessage] = useState('Hello folks!!!');
 
-    const handleAddItem = () => {
-        setData((preState) => [...preState, Object.assign({}, { id: preState?.length + 1, text: 'random' })])
-    }
+    // Prevent the recreating the function again and again. It’s help to avoid the component re-rendering
+    const handleUpdate = useCallback(() => {
+        setMessage('Welcome to react...')
+    }, [])
+
+    console.log('App render');
+
+
     return <div>
-        {data?.map(e => {
-            return <Item key={e.id} label={e.text} />
-        })}
-        <button onClick={handleAddItem}>Add new</button>
+        {message}
+        <Button handleUpdate={handleUpdate} />
     </div>;
 }
 
